@@ -1,9 +1,9 @@
 import React from 'react';
 
 import QUESTIONS from '../../assets/data/questions';
-import QuizCompletePNG from '../../assets/quiz-complete.png';
 
 import Question from './Question/Question';
+import Summary from './Summary/Summary';
 
 const Quiz = () => {
 	const [userAnswers, setUserAnswers] = React.useState([]);
@@ -23,12 +23,7 @@ const Quiz = () => {
 	const isQuizComplete = activeQuestionIndex === QUESTIONS.length;
 
 	if (isQuizComplete) {
-		return (
-			<div id='summary'>
-				<img src={QuizCompletePNG} alt='Trophy Icon' />
-				<h2>Quiz Complete!</h2>
-			</div>
-		);
+		return <Summary userAnswers={userAnswers} />;
 	}
 
 	return (
