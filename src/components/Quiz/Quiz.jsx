@@ -6,32 +6,14 @@ import QuizCompletePNG from '../../assets/quiz-complete.png';
 import Question from './Question/Question';
 
 const Quiz = () => {
-	const [answerState, setAnswerState] = React.useState('');
 	const [userAnswers, setUserAnswers] = React.useState([]);
-	const activeQuestionIndex =
-		answerState === '' ? userAnswers.length : userAnswers.length - 1;
+	const activeQuestionIndex = userAnswers.length;
 
-	const handleSelectAnswer = React.useCallback(
-		(selectedAnswer) => {
-			setAnswerState('answered');
-			setUserAnswers((prevAnswers) => {
-				return [...prevAnswers, selectedAnswer];
-			});
-
-			setTimeout(() => {
-				if (selectedAnswer === QUESTIONS[activeQuestionIndex].answers[0]) {
-					setAnswerState('correct');
-				} else {
-					setAnswerState('wrong');
-				}
-
-				setTimeout(() => {
-					setAnswerState('');
-				}, 2000);
-			}, 1000);
-		},
-		[activeQuestionIndex]
-	);
+	const handleSelectAnswer = React.useCallback((selectedAnswer) => {
+		setUserAnswers((prevAnswers) => {
+			return [...prevAnswers, selectedAnswer];
+		});
+	}, []);
 
 	const handleSkipAnswer = React.useCallback(
 		() => handleSelectAnswer(null),
@@ -53,10 +35,7 @@ const Quiz = () => {
 		<div id='quiz'>
 			<Question
 				key={activeQuestionIndex}
-				text={QUESTIONS[activeQuestionIndex].text}
-				answers={QUESTIONS[activeQuestionIndex].answers}
-				answerState={answerState}
-				selectedAnswer={userAnswers[userAnswers.length - 1]}
+				index={activeQuestionIndex}
 				onSelectAnswer={handleSelectAnswer}
 				onSkipAnswer={handleSkipAnswer}
 			/>
